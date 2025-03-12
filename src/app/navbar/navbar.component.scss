@@ -1,0 +1,16 @@
+@import "shared/colors.scss";
+
+#navbar {
+    background-color: red;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    position: sticky;
+    left: 0;
+    top: 0;
+    width: 100%;
+}
+
+#logo {
+    width: 200px;
+}
