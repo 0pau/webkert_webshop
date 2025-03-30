@@ -1,0 +1,39 @@
+.card {
+    background-color: #f0f0f0;
+    border-radius: 15px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-image {
+    width: 100%;
+    height: 150px;
+    object-fit: contain;
+    padding: 10px;
+}
+
+.product-info {
+    margin: 15px 0;
+    text-align: center;
+    height: 100%;
+}
+
+.product-info > p:first-child {
+    font-weight: bold;
+}
+
+.product-info > p:last-child {
+    font-weight: 600;
+    color: var(--brand-dark);
+}
+
+.product-action {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+}
+
+.product-action button {
+    flex-shrink: 0;
+}

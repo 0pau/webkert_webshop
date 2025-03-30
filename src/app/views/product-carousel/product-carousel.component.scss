@@ -1,0 +1,43 @@
+@use '@angular/material' as mat;
+
+.pager {
+    @include mat.fab-overrides((
+        container-color: var(--brand)
+    ));
+}
+
+section {
+    position: relative;
+}
+
+section > div {
+    display: flex;
+    gap: 15px;
+    overflow-x: hidden;
+    overflow-y: visible;
+    margin: 15px 0;
+}
+
+section > div > * {
+    width: calc(25% - 12px);
+    height: 300px;
+    flex-shrink: 0;
+}
+
+.pager {
+    color: white;
+    position: absolute;
+    border-radius: 100%;
+}
+
+.pager.right {
+    right: 0;
+    top: 50%;
+    transform: translate(50%, -50%);
+}
+
+.pager.left {
+    left: 0;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}

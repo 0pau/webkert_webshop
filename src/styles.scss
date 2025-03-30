@@ -1,6 +1,41 @@
 /* You can add global styles to this file, and also import other style files */
 
+@use '@angular/material' as mat;
+
+button {
+    @include mat.button-overrides((
+        ripple-color: #E8CB0D20,
+        text-label-text-color: var(--brand-dark),
+        state-layer-color: #baa415
+    ));
+    @include mat.button-overrides((
+        filled-container-color: var(--brand-dark),
+        filled-ripple-color: #FFFFFF25
+    ))
+}
+
+:root {
+    --brand: #E8CB0D;
+    --brand-dark: #baa415;
+    --gray: #3C3939;
+}
+
 * {
     font-family: 'Nunito', sans-serif;
     margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    overflow-y: scroll;
+}
+
+main {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 25px;
+}
+
+app-placeholder {
+    width: 100%;
 }
