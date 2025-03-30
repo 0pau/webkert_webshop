@@ -2,10 +2,10 @@
     <div #scroller>
         <app-product-card></app-product-card>
     </div>
-    <button mat-fab class="pager left" (click)="leftPagerClick()">
+    <button *ngIf="this.shouldShowPagers()" mat-fab class="pager left" (click)="leftPagerClick()">
         <mat-icon>chevron_left</mat-icon>
     </button>
-    <button mat-fab class="pager right" (click)="rightPagerClick()">
+    <button *ngIf="this.shouldShowPagers()" mat-fab class="pager right" (click)="rightPagerClick()">
         <mat-icon>chevron_right</mat-icon>
     </button>
 </section>

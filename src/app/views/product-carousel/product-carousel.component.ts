@@ -2,10 +2,11 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { MatButton, MatFabButton, MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { ProductCardComponent } from '../product-card/product-card.component';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-product-carousel',
-  imports: [MatButton, MatIconButton, MatIcon, MatFabButton, ProductCardComponent],
+  imports: [MatButton, MatIconButton, MatIcon, MatFabButton, ProductCardComponent, NgIf],
   templateUrl: './product-carousel.component.html',
   styleUrl: './product-carousel.component.scss'
 })
@@ -33,5 +34,9 @@ export class ProductCarouselComponent {
       this.page--;
       this.scroller?.nativeElement.scroll({left: this.page*this.cols*(250-12), behavior: 'smooth' });
     }
+  }
+
+  public shouldShowPagers() : boolean {
+    return (this.scroller?.nativeElement.children.length > this.cols);
   }
 }
