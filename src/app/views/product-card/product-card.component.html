@@ -1,12 +1,16 @@
-<div matRipple class="card">
-    <img class="product-image" src="favicon.png">
+<div matRipple class="card" (click)="goToProduct()">
+  @if (product !== undefined) {
+    <img class="product-image" src="{{product.image}}">
     <div class="product-info">
-        <p>Product name</p>
-        <p>0 Ft</p>
+      <p>{{product.name}}</p>
+      <p>{{product.price}} Ft</p>
     </div>
     <div class="product-action">
-        <button mat-icon-button><mat-icon>favorite</mat-icon></button>
-        <app-placeholder />
-        <button mat-flat-button>Kosárba</button>
+      <button mat-icon-button><mat-icon>favorite</mat-icon></button>
+      <app-placeholder />
+      <button mat-flat-button>Kosárba</button>
     </div>
+  } @else {
+    <p class="error">Ez az elem nem jeleníthető meg.</p>
+  }
 </div>

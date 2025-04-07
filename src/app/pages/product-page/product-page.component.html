@@ -1,0 +1,30 @@
+<main>
+  <div id="main-info">
+    <img src="{{product.image}}">
+    <div>
+      <div>
+        <p>{{product.manufacturer}}</p>
+        <h1>{{product.name}}</h1>
+      </div>
+      <div>
+        <p>*****</p>
+      </div>
+      <p>{{product.description}}</p>
+      <div class="card" id="stock">
+        <mat-icon>local_shipping</mat-icon>
+        <p>Raktáron:</p>
+        <p class="quantity">0 db</p>
+      </div>
+      <div id="main-price">
+        <p class="price">{{product.price}} Ft</p>
+        <button mat-flat-button>Kosárba</button>
+      </div>
+    </div>
+  </div>
+  <h1>Specifikációk</h1>
+  <p>Nincs itt semmi se... De majd lesz</p>
+  <h1>Vélemények</h1>
+  <p>Még senki sem véleményezte ezt a terméket.</p>
+  <h1>Hasonló termékek</h1>
+  <app-product-carousel></app-product-carousel>
+</main>
