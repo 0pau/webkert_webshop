@@ -1,0 +1,12 @@
+@if (specs?.size !== 0) {
+  <div>
+    <table>
+      <tr *ngFor="let entry of specs?.values()">
+        <td>{{entry.name}}</td>
+        <td>{{entry.value + " " + entry.metric}}</td>
+      </tr>
+    </table>
+  </div>
+} @else {
+  <p>Ehhez a termékhez nem tartozik specifikáció.</p>
+}

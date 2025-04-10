@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { NavbarComponent } from './navbar/navbar.component';
+import { NavbarComponent } from './common/navbar/navbar.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 
 @Component({

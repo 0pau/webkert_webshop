@@ -1,3 +1,6 @@
+@if (this.productNotFound) {
+  <app-not-found></app-not-found>
+} @else {
 <main>
   <div id="main-info">
     <img src="{{product.image}}">
@@ -7,24 +10,40 @@
         <h1>{{product.name}}</h1>
       </div>
       <div>
-        <p>*****</p>
+        <app-rating-view></app-rating-view>
       </div>
       <p>{{product.description}}</p>
       <div class="card" id="stock">
         <mat-icon>local_shipping</mat-icon>
         <p>Raktáron:</p>
-        <p class="quantity">0 db</p>
+        <p class="quantity">{{product.quantity}} db</p>
       </div>
       <div id="main-price">
-        <p class="price">{{product.price}} Ft</p>
-        <button mat-flat-button>Kosárba</button>
+        <div class="price-layout">
+          @if (product.discount !== 0) {
+            <p class="original-price">{{product.price | pricePipe}}</p>
+            <p class="price">{{product.price-product.price*(product.discount/100) | pricePipe}}</p>
+          } @else {
+            <p class="price">{{product.price | pricePipe}}</p>
+          }
+        </div>
+        <app-numeric-up-down [min]="1" [max]="product.quantity" (onError)="showSnackbar($event)" (onValueChange)="basketItem!.quantity = $event"></app-numeric-up-down>
+        <button mat-flat-button (click)="addToBasket()">Kosárba</button>
       </div>
     </div>
   </div>
-  <h1>Specifikációk</h1>
-  <p>Nincs itt semmi se... De majd lesz</p>
-  <h1>Vélemények</h1>
-  <p>Még senki sem véleményezte ezt a terméket.</p>
-  <h1>Hasonló termékek</h1>
-  <app-product-carousel></app-product-carousel>
+  <div class="divided-layout">
+    <div>
+      <h1>Specifikációk</h1>
+      <app-spec-sheet [specs]="product.properties"></app-spec-sheet>
+    </div>
+    <div>
+      <h1>Vélemények</h1>
+      <p>Még senki sem véleményezte ezt a terméket.</p>
+    </div>
+  </div>
+  <!--
+  <app-product-carousel headTitle="Hasonló termékek"></app-product-carousel>
+  -->
 </main>
+}

@@ -1,45 +1,74 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
-import { MatButton, MatFabButton, MatIconButton } from '@angular/material/button';
-import { MatIcon } from '@angular/material/icon';
-import { ProductCardComponent } from '../product-card/product-card.component';
-import { NgIf } from '@angular/common';
+import {ChangeDetectorRef, Component, ElementRef, inject, Input, ViewChild} from '@angular/core';
+import {MatIconButton} from '@angular/material/button';
+import {MatIcon} from '@angular/material/icon';
+import {ProductCardComponent} from '../product-card/product-card.component';
+import {NgForOf, NgIf} from '@angular/common';
 import {Product} from '../../model/Product';
 
 @Component({
   selector: 'app-product-carousel',
-  imports: [MatButton, MatIconButton, MatIcon, MatFabButton, ProductCardComponent, NgIf],
+  imports: [MatIconButton, MatIcon, ProductCardComponent, NgIf, NgForOf],
   templateUrl: './product-carousel.component.html',
   styleUrl: './product-carousel.component.scss'
 })
 export class ProductCarouselComponent {
-  private cols : number = 4;
   private page : number = 0;
-  private maxPages : number = 0;
 
-  testProduct : Product = new Product("test1", "Teszt", "Teszt termék", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAAMzElEQVR42u3cYZIbRRZGUVin19frZEIQZsC421KppMqX95wFTBCqfHy3+TG//wYA5Px+9T8AAPB+AgAAggQAAAQJAAAIEgAAECQAACBIAABAkAAAgCABAABBAgAAggQAAAQJAAAIEgAAECQAACBIAABAkAAAgCABAABBAgAAggQAAAQJAAAIEgAAECQAACBIAABAkAAAgCABAABBAgAAggQAAAQJAAAIEgAAECQAACBIAABAkAAAgCABAABBAgAAggQAAAQJAAAIEgAAECQAACBIAABAkAAAgCABAABBAgAAggQAAAQJAAAIEgAAECQAACBIAABAkAAAgCABAABBAgAAggQAAAQJAAAIEgAAECQAACBIAABAkAAAgCABAABBAgAAggQAAAQJAAAIEgAAECQAACBIAABAkAAAgCABAABBAgAAggQAAAQJAAAIEgAAECQAACBIAABAkAAAgCABAABBAgAAggQAAAQJAAAIEgAAECQAACBIAABAkAAAgCABAABBAgAAggQAAAQJAAAIEgAAECQAACBIAABAkAAAgCABAABBAgAAggQAAAQJAAAIEgAAECQAACBIAABAkAAAgCABAABBAgAAggQAAAQJAAAIEgAAECQAACBIAABAkAAAgCABAABBAgAAggQAAAQJAAAIEgAAECQAACBIAABAkAAAgCABAABBAgAAggQAAAQJAAAIEgAAECQAACBIAABAkAAAgCABAABBAgAAggQAAAQJAAAIEgAAECQAACBIAMBmPj4+/njF/+63b9/8+wI24qBhoFeN/DMEAsziYGFxK479vUQBrMtxwmImD/6vCAJYh2OEBew8+p8RA3AtBwgXKY7+Z8QAvJ+jgzcz/F8TA/AeDg3ewOg/TgjAazkweCHD/zwhAK/hsOAFDP/5hACcy0HByYz/awkBOIdDgpMY/vcSAvAcBwRPMvzXEQFwnOOBJxj/NQgBeJyjgQMM/3pEADzGwcCDjP/ahADcx6HAA4z/DCIAfs2RwJ2M/ywiAL7mQOAOxn8mEQCfcxzwBcM/nwiAn3MY8AnjvxchAP/mIOAnjP+eRAD8n2OAHxj/vYkA+ItDgB8IgP2JABAA8C/Gv0EAgACAvxn/FhFAnQOA3/Ye/2eHzm8De/L4ydtp4N41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AICzOGIYRAAAZ3HEMIgAAM7iiGEQAQCcxRHDIAIAOIsjhkEEAHAWRwyDCADgLI4YAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIL+BzxkQj1WWO13AAAAAElFTkSuQmCC", 12);
+  private cdRef = inject(ChangeDetectorRef);
+
+  @Input() productList:Product[] = [];
+  @Input() headTitle:string = "";
 
   @ViewChild('scroller', {static: true}) scroller!: ElementRef;
 
   ngOnInit() {
-    this.maxPages = Math.floor(this.scroller?.nativeElement.children.length / 4);
+    this.cdRef.detectChanges();
+  }
+
+  private getMaxPages() {
+    return Math.floor(this.productList.length / this.getCols());
+  }
+
+  private getCols() {
+    let w = window.innerWidth;
+    if (w > 900) {
+      return 4;
+    } else if (w <= 900 && w > 700) {
+      return 3;
+    } else if (w <= 700 && w > 500) {
+      return 2;
+    }
+    return 1;
   }
 
   public rightPagerClick() {
-    if (this.page < this.maxPages) {
-      this.page++;
-      this.scroller?.nativeElement.scroll({left: this.page*this.cols*(250-12), behavior: 'smooth' });
+    if (this.page < this.getMaxPages()) {
+      this.scrollTo(1);
     }
   }
 
   public leftPagerClick() {
-    console.log(this.scroller?.nativeElement.children.length);
-    if (this.page != 0) {
-      this.page--;
-      this.scroller?.nativeElement.scroll({left: this.page*this.cols*(250-12), behavior: 'smooth' });
+    if (this.page > 0) {
+      this.scrollTo(-1);
     }
   }
 
+  private scrollTo(direction:number) {
+    this.page += direction;
+    let pos = this.scroller?.nativeElement.children[this.page*this.getCols()].offsetLeft;
+    this.scroller?.nativeElement.scroll({left: pos, behavior: 'smooth' });
+  }
+
   public shouldShowPagers() : boolean {
-    return (this.scroller?.nativeElement.children.length > this.cols);
+    return !this.isWindowSmall() && (this.scroller?.nativeElement.children.length > this.getCols());
+  }
+
+  public isWindowSmall() {
+    return window.innerWidth<=500;
+  }
+
+  resizeEvent(event:any) {
+      this.page = 0;
+      this.scroller?.nativeElement.scroll({left: 0});
   }
 }

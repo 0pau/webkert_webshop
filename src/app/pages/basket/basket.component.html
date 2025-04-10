@@ -1,21 +1,32 @@
 <main>
     <div>
+      @if (BasketController.getInstance().getItemCount() != 0) {
+        <div class="headbar">
+          <h2>Kosárban lévő termékek</h2>
+          <button (click)="clearAll()" mat-button>Összes törlése</button>
+        </div>
+        <app-basket-item *ngFor="let i of BasketController.getInstance().getItems()" [item]="i"></app-basket-item>
+      } @else {
         <div id="empty-basket">
             <img src="no_items.svg">
             <h3>Az Ön kosara jelenleg üres.</h3>
         </div>
+      }
     </div>
     <div id="price-details">
         <div id="basket-sum">
-            <h3>Kosár összértéke</h3>
-            <h4>0 Ft</h4>
+            <h3>Végösszeg</h3>
+            <h4>{{BasketController.getInstance().getPriceSum() | pricePipe}}</h4>
         </div>
+      <!--
         <div id="coupons">
             <p>Nincsenek kuponok.</p>
-        </div>
+        </div>-->
+      @if (BasketController.getInstance().getItemCount() != 0) {
         <div id="price-actions">
             <button mat-flat-button>Tovább a fizetéshez</button>
         </div>
+      }
     </div>
-    
+
 </main>

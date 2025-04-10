@@ -1,0 +1,17 @@
+div {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+p {
+  font-weight: bold;
+  color: var(--brand);
+  margin-left: 10px;
+}

@@ -2,22 +2,33 @@
 
 @use '@angular/material' as mat;
 
-button {
-    @include mat.button-overrides((
-        ripple-color: #E8CB0D20,
-        text-label-text-color: var(--brand-dark),
-        state-layer-color: #baa415
-    ));
-    @include mat.button-overrides((
-        filled-container-color: var(--brand-dark),
-        filled-ripple-color: #FFFFFF25
-    ))
-}
-
 :root {
     --brand: #E8CB0D;
-    --brand-dark: #baa415;
+    --brand-dark: #cab100;
     --gray: #3C3939;
+    --gray2: #524d4d;
+
+  @include mat.form-field-overrides((
+    outlined-focus-outline-color: var(--brand-dark),
+    outlined-focus-label-text-color: var(--brand-dark),
+    outlined-caret-color: black
+  ));
+
+  @include mat.button-overrides((
+    ripple-color: #E8CB0D20,
+    text-label-text-color: var(--brand-dark),
+    state-layer-color: #baa415
+  ));
+  @include mat.button-overrides((
+    filled-container-color: var(--brand-dark),
+    filled-ripple-color: #FFFFFF25
+  ));
+
+  @include mat.tabs-overrides((
+    active-indicator-color: var(--brand-dark),
+    active-focus-indicator-color: var(--brand-dark)
+  ))
+
 }
 
 * {
@@ -33,7 +44,7 @@ body {
 main {
     max-width: 1000px;
     margin: 0 auto;
-    padding: 25px;
+    padding: 30px 0;
 }
 
 app-placeholder {
@@ -43,4 +54,41 @@ app-placeholder {
 .card {
   background-color: #f0f0f0;
   border-radius: 15px;
+}
+
+main > h1:not(:first-child) {
+  margin-top: 20px;
+}
+
+.original-price {
+  opacity: 0.5;
+  text-decoration: line-through;
+  font-size: 13px;
+  margin-top: 5px;
+}
+
+.headbar {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.headbar > *:last-child {
+  margin-left: auto;
+}
+
+h1 {
+  font-size: 28px;
+}
+
+@media screen and (max-width: 1000px) {
+  main {
+    padding: 20px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  h1 {
+    font-size: 26px;
+  }
 }

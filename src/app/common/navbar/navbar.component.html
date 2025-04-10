@@ -1,0 +1,41 @@
+<div id="nav-main" (window:resize)="onResize($event)">
+  <div id="navbar">
+    @if (isWindowSmall()) {
+      <button mat-icon-button matTooltip="Menü">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <button class="right" mat-icon-button matTooltip="Keresés" (click)="goToPage('search')">
+        <mat-icon>search</mat-icon>
+      </button>
+    } @else {
+      <img src="logo-light.png" id="logo">
+      <div id="searchbox">
+        <input placeholder="Írj ide a kereséshez">
+        <button mat-icon-button matTooltip="Keresés indítása">
+          <mat-icon>search</mat-icon>
+        </button>
+      </div>
+    }
+    <button mat-icon-button matTooltip="Kosár" (click)="goToPage('basket')">
+      <mat-icon>shopping_basket</mat-icon>
+      <p class="basket_badge">{{BasketController.getInstance().getItemCount()}}</p>
+    </button>
+    <button mat-icon-button matTooltip="Fiók" (click)="goToPage('login')">
+      <mat-icon>person</mat-icon>
+    </button>
+  </div>
+  @if (!isWindowSmall()) {
+    <div id="desktop-topbar">
+      <button mat-button>
+        <mat-icon>menu</mat-icon>
+        <p>Összes termékkategória</p>
+      </button>
+      <button mat-button>Új termékeink</button>
+      <button mat-button>Népszerű termékek</button>
+      <button mat-button matTooltip="Menü megnyitása" class="right">
+        <mat-icon>favorite</mat-icon>
+        <p>Kedvenceim</p>
+      </button>
+    </div>
+  }
+</div>

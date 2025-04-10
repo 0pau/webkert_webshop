@@ -8,9 +8,10 @@
 
 section {
     position: relative;
+    margin-top: 25px;
 }
 
-section > div {
+section > .scroller {
     display: flex;
     gap: 15px;
     overflow-x: hidden;
@@ -18,26 +19,42 @@ section > div {
     margin: 15px 0;
 }
 
-section > div > * {
+section > .scroller > * {
     width: calc(25% - 12px);
-    height: 300px;
+    height: 325px;
     flex-shrink: 0;
 }
 
-.pager {
-    color: white;
-    position: absolute;
-    border-radius: 100%;
+header {
+  display: flex;
+  align-items: center;
 }
 
-.pager.right {
-    right: 0;
-    top: 50%;
-    transform: translate(50%, -50%);
+.pager-holder {
+  margin-left: auto;
+  display: flex;
 }
 
-.pager.left {
-    left: 0;
-    top: 50%;
-    transform: translate(-50%, -50%);
+
+@media screen and (max-width: 900px) {
+  section > .scroller > * {
+    width: calc(33% - 12px);
+  }
+}
+
+@media screen and (max-width: 700px) {
+  section > .scroller > * {
+    width: calc(50% - 12px);
+  }
+}
+
+@media screen and (max-width: 500px) {
+
+  section > .scroller {
+    overflow-x: scroll;
+  }
+
+  section > .scroller > * {
+    width: 250px;
+  }
 }

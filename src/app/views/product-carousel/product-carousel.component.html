@@ -1,11 +1,16 @@
-<section>
-    <div #scroller>
-        <app-product-card [product]="testProduct"></app-product-card>
+<section (resize)="resizeEvent($event)">
+    <header>
+      <h1>{{headTitle}}</h1>
+      <div class="pager-holder" *ngIf="this.shouldShowPagers()">
+        <button mat-icon-button (click)="leftPagerClick()">
+          <mat-icon>chevron_left</mat-icon>
+        </button>
+        <button mat-icon-button (click)="rightPagerClick()">
+          <mat-icon>chevron_right</mat-icon>
+        </button>
+      </div>
+    </header>
+    <div #scroller class="scroller">
+        <app-product-card *ngFor="let product of productList" [product]="product"></app-product-card>
     </div>
-    <button *ngIf="this.shouldShowPagers()" mat-fab class="pager left" (click)="leftPagerClick()">
-        <mat-icon>chevron_left</mat-icon>
-    </button>
-    <button *ngIf="this.shouldShowPagers()" mat-fab class="pager right" (click)="rightPagerClick()">
-        <mat-icon>chevron_right</mat-icon>
-    </button>
 </section>

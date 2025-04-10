@@ -1,0 +1,8 @@
+<div class="basket-item card">
+  <img class="product-image" src="{{product?.image}}">
+  <div>
+    <p class="product-name">{{product?.name}}</p>
+    <p class="product-q"><span class="product-price">{{item?.price | pricePipe}}</span> × {{item?.quantity}}</p>
+  </div>
+  <button mat-icon-button (click)="remove()"><mat-icon>delete</mat-icon></button>
+</div>

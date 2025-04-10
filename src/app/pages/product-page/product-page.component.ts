@@ -1,10 +1,22 @@
-import { Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Product} from '../../model/Product';
 import {MatIcon} from '@angular/material/icon';
 import {MatButton} from '@angular/material/button';
 import {ProductCarouselComponent} from '../../views/product-carousel/product-carousel.component';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
+import {ProductController} from '../../controller/ProductController';
+import {RatingViewComponent} from '../../views/rating-view/rating-view.component';
+import {PricePipe} from '../../pipe/PricePipe';
+import {NumericUpDownComponent} from '../../views/numeric-up-down/numeric-up-down.component';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {UserBasketItem} from '../../model/UserBasketItem';
+import {FormsModule} from '@angular/forms';
+import {BasketController} from '../../controller/BasketController';
+import {SpecSheetComponent} from '../../views/spec-sheet/spec-sheet.component';
+import {Title} from '@angular/platform-browser';
+import {NotFoundComponent} from '../not-found/not-found.component';
+import {HistoryController} from '../../controller/HistoryController';
 
 @Component({
   selector: 'app-product-page',
@@ -12,22 +24,66 @@ import {MatProgressSpinner} from '@angular/material/progress-spinner';
     MatIcon,
     MatButton,
     ProductCarouselComponent,
-    MatProgressSpinner
+    MatProgressSpinner,
+    RatingViewComponent,
+    PricePipe,
+    NumericUpDownComponent,
+    FormsModule,
+    SpecSheetComponent,
+    NotFoundComponent
   ],
   templateUrl: './product-page.component.html',
   styleUrl: './product-page.component.scss'
 })
 export class ProductPageComponent {
-  protected id : string | null = "??";
+  protected id : string = "??";
 
-  protected product : Product = new Product("test1", "Teszt", "Teszt termék", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAAMzElEQVR42u3cYZIbRRZGUVin19frZEIQZsC421KppMqX95wFTBCqfHy3+TG//wYA5Px+9T8AAPB+AgAAggQAAAQJAAAIEgAAECQAACBIAABAkAAAgCABAABBAgAAggQAAAQJAAAIEgAAECQAACBIAABAkAAAgCABAABBAgAAggQAAAQJAAAIEgAAECQAACBIAABAkAAAgCABAABBAgAAggQAAAQJAAAIEgAAECQAACBIAABAkAAAgCABAABBAgAAggQAAAQJAAAIEgAAECQAACBIAABAkAAAgCABAABBAgAAggQAAAQJAAAIEgAAECQAACBIAABAkAAAgCABAABBAgAAggQAAAQJAAAIEgAAECQAACBIAABAkAAAgCABAABBAgAAggQAAAQJAAAIEgAAECQAACBIAABAkAAAgCABAABBAgAAggQAAAQJAAAIEgAAECQAACBIAABAkAAAgCABAABBAgAAggQAAAQJAAAIEgAAECQAACBIAABAkAAAgCABAABBAgAAggQAAAQJAAAIEgAAECQAACBIAABAkAAAgCABAABBAgAAggQAAAQJAAAIEgAAECQAACBIAABAkAAAgCABAABBAgAAggQAAAQJAAAIEgAAECQAACBIAABAkAAAgCABAABBAgAAggQAAAQJAAAIEgAAECQAACBIAABAkAAAgCABAABBAgAAggQAAAQJAAAIEgAAECQAACBIAABAkAAAgCABAABBAgAAggQAAAQJAAAIEgAAECQAACBIAMBmPj4+/njF/+63b9/8+wI24qBhoFeN/DMEAsziYGFxK479vUQBrMtxwmImD/6vCAJYh2OEBew8+p8RA3AtBwgXKY7+Z8QAvJ+jgzcz/F8TA/AeDg3ewOg/TgjAazkweCHD/zwhAK/hsOAFDP/5hACcy0HByYz/awkBOIdDgpMY/vcSAvAcBwRPMvzXEQFwnOOBJxj/NQgBeJyjgQMM/3pEADzGwcCDjP/ahADcx6HAA4z/DCIAfs2RwJ2M/ywiAL7mQOAOxn8mEQCfcxzwBcM/nwiAn3MY8AnjvxchAP/mIOAnjP+eRAD8n2OAHxj/vYkA+ItDgB8IgP2JABAA8C/Gv0EAgACAvxn/FhFAnQOA3/Ye/2eHzm8De/L4ydtp4N41aH4zmM/DJ236kK0wXtN/w5sVfkd4N4+etKnjtepgTf09b1b9TeFVPHiypo3VpIGa9tveTPp94QwePEmTBmryME36nW8m/9bwKI+dpAnDtNMYTfi9v9vpd4eveOjkTBijXUfIbw/r8NDJWXmECuOz8u//XeE7gEdOysrjUxudlb/FTe170OOBk7Hy4FTHxjeB63jgZKw6NvWhWfW73NS/DXvzuElYdWQMzF98H3g/j5uE1QbGsPzXat/oO9+KXXnYbG/FYTEqP+dbwft42GxvtVExKF9b7Xvd+GbsyKNma6uNiSG5j+8Gr+dRs7WVhsSIPGalb3fj+7EbD5qtrTIixuOYVb7fjW/IbjxotmU89rDKd/QN2Y0HzbYMxz58Szifx8yWDMZefE84n8fMlgzGflb4pr4nO/GY2ZKx2M8K3/TGd2UXHjLbMRT7WuHb+q7swkNmO0Zib1d/X9+WXXjIbOfqgbgxEq9z9ff1bdmFh8xWrh6HGwPxeld/Z9+YHXjEbOXqYbgxDq939Xf2jdmBR8xWDEOD7wzP84jZimHouPJb+87swCNmG8a/RQDAczxitiEAWgQAPMcjZhsCoEcEwHEeMNswBj2+ORznAbMNY9Djm8NxHjBb8J//mwQAHOcBswUB0HXVt/fNmc4DZgv+EuwSAHCMB8wWBECXAIBjPGC2IAC6BAAc4wEznvFvEwBwjAfMeAKgTQDAMR4w4wmANgEAx3jAjCcA2gQAHOMBs513DoIRuJ4AgGM8YFLOHAsDsAYBAMd4wPAPj4yJAViDAIBjPGC4049DYwDWIADgGA8YGO2KADD+7MAjBsby1z8c5xEDYwkAOM4jBsYSAHCcRwyMJQDgOI8YGMn/AyQ8xyMGRvLXPzzHQwZGEgDwHA8ZGMd//ofnecjAOAIAnuchA6MYfziHxwyMIgDgHB4zMMaV438jANiJxwyM4a9/OI8HDYzgr384lwcNLO/q8b8RAOzGgwaWZvzhNTxqYGkCAF7DowaWZfzhdTxsYEkrjP+NAGBXHjawHOMPr+dxA0tZZfxvBAA787iBZRh/eB8PHFjCSuN/IwDYnQcOXM74w/t55MCljD9cw0MHLrPa+N8IACo8dOASxh+u5bEDb2f84XoePPBWK47/jQCgxoMH3sb4wzo8euAtjD+sxcMHXs74w3o8fuCljD+syQEAL7Hq8H8nAKhzAMDpjD+szxEApzL+MINDAE5j/GEOxwCcwvjDLA4CeJrxh3kcBfAU4w8zOQzgMOMPczkO4GGrD/+N8YevORDgIcYf9uBIgLsZf9iHQwHuYvxhL44F+CXjD/txMMCXjD/sydEAnzL+sC+HA/yU8Ye9OR7gP4w/7M8BAf9i/KHBEQF/M/7Q4ZCAPxl/aHFMgPGHIAcFLB0Ahh9ew2FBnPGHJscFYcYfuhwYRBl/aHNkEGT8AYcGQasGgPGH93FsEGP8gRsHByHGH/jO0UHIigFg/OEaDg8ijD/wT44PAow/8CMHCAGrBYDxh+s5Qtic8Qd+xiHC5lYKAOMP63CMsDHjD3zGQcLGVgkA4w/rcZSwKeMPfMVhwqZWCADjD+tynLAh4w/8igOFDQkA4FccKGzo6gAw/rA+RwqbMf7APRwqbEYAAPdwqLAR4w/cy7HCRgQAcC/HChu5MgCMP8ziYGEjAgC4l4OFTRh/4BGOFjYhAIBHOFrYhAAAHuFoYRNXBYDxh5kcLmzAX//AoxwubEAAAI9yuLAB//kfeJTjhQ0IAOBRjhc2IACARzle2IAAAB7leGEDAgB4lOOF4Yw/cIQDhuEEAHCEA4bhBABwhAOG4QQAcIQDhuEEAHCEA4bhBABwhAOG4QQAcIQDhuEEAHCEA4bhBABwhAOG4a4IAOMP8zliGE4AAEc4YhhOAABHOGIYTgAARzhiGE4AAEc4YhhOAABHOGIYTgAARzhiGE4AAEc4YhhOAABHOGIYTgAARzhiGE4AAEc4YhhOAABHOGIACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAMMjHx8cfV/8z3Hz79s2/O2A4RwyDCADgLI4YBhEAwFkcMQwiAICzOGIYRAAAZ3HEMIgAAM7iiGEQAQCcxRHDIAIAOIsjhkEEAHAWRwyDCADgLI4YBhEAwFkcMQwiAICzOGIYRAAAZ3HEMIgAAM7iiGEQAQCcxRHDIAIAOIsjhkEEAHAWRwyDCADgLI4YBhEAwFkcMQwiAICzOGIYRAAAZ3HEMIgAAM7iiGEQAQCcxRHDIAIAOIsjhkEEAHAWRwyDCADgLI4YBhEAwFkcMQwiAICzOGIYRAAAZ3HEMIgAAM7iiGEQAQCcxRHDIAIAOIsjhkEEAHAWRwyDCADgLI4YAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIIEAAAECQAACBIAABAkAAAgSAAAQJAAAIAgAQAAQQIAAIL+BzxkQj1WWO13AAAAAElFTkSuQmCC", 12);
+  private title = inject(Title);
+
+  protected product : Product;
+  protected productNotFound : boolean = false;
+
+  protected basketItem : UserBasketItem|undefined = undefined;
+
+  private _snackBar : MatSnackBar = inject(MatSnackBar);
 
   constructor(private route: ActivatedRoute) {
-    this.id = route.snapshot.paramMap.get("id");
-    this.product.manufacturer = "Teszt Company Ltd.";
+    this.id = route.snapshot.paramMap.get("id")!;
+
+    var p = ProductController.getInstance().getProductById(this.id);
+    this.product = p!;
+
+    if (p === undefined) {
+      this.productNotFound = true;
+      return;
+    }
+
+    let price = this.product.price;
+    if (this.product.discount != 0) {
+      price = price-(price*(this.product.discount/100));
+    }
+
+    this.basketItem = new UserBasketItem(this.product.id, price, 1);
+    this.title.setTitle(this.product.name + " | VoltVault");
+    HistoryController.getInstance().addItem(this.id);
   }
 
   ngOnInit() {
     document.documentElement.scrollTo(0,0);
   }
+
+  showSnackbar(message: string) {
+    this._snackBar.open(message, "", {
+      duration: 1500
+    });
+  }
+
+  addToBasket() {
+    BasketController.getInstance().addItem(this.basketItem!);
+    this._snackBar.open("A termék a kosárhoz lett adva", "", {
+      duration: 1500
+    })
+  }
+
+  protected readonly alert = alert;
 }

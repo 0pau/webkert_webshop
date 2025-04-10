@@ -3,23 +3,36 @@
 
 button {
     @include mat.icon-button-overrides((
-        ripple-color: #FFFFFF25
+        ripple-color: #FFFFFF25,
+        state-layer-color: #FFFFFFAF
+    ));
+    @include mat.button-overrides((
+        ripple-color: #FFFFFF25,
+        state-layer-color: #FFFFFFAF
     ))
 }
 
+#nav-main {
+  background-color: var(--gray);
+  position: sticky;
+  left: 0;
+  top: 0;
+  z-index: 10;
+}
+
+#nav-main > * {
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 #navbar {
-    background-color: var(--gray);
     display: flex;
     gap: 15px;
-    padding: 0 15px;
+    padding: 10px 15px;
     align-items: center;
-    padding: 10px;
-    position: sticky;
-    left: 0;
-    top: 0;
     width: 100%;
     color: white;
-    z-index: 10;
 }
 
 #navbar > button {
@@ -27,7 +40,7 @@ button {
 }
 
 #logo {
-    width: 200px;
+    height: 42px;
 }
 
 #searchbox {
@@ -36,7 +49,7 @@ button {
     color: black;
     border-radius: 30px;
     display: flex;
-    margin: 0 20px;
+    margin: 0 50px;
 }
 
 #searchbox input {
@@ -70,4 +83,35 @@ button {
 
 #navbar button {
     color: white;
+}
+
+#desktop-topbar {
+  border-radius: 25px 25px 0 0;
+  background-color: var(--gray2);
+  color: white;
+  padding: 5px;
+  display: flex;
+  position: relative;
+}
+
+#desktop-topbar * {
+  color: white
+}
+
+#desktop-topbar mat-icon {
+  font-size: 16px;
+}
+
+.right {
+  margin-left: auto;
+}
+
+aside {
+  width: 300px;
+  display: flex;
+  gap: 10px;
+}
+
+aside:last-child {
+  justify-content: end;
 }

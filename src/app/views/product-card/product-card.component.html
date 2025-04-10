@@ -1,14 +1,25 @@
-<div matRipple class="card" (click)="goToProduct()">
+<div matRipple class="card">
   @if (product !== undefined) {
-    <img class="product-image" src="{{product.image}}">
-    <div class="product-info">
-      <p>{{product.name}}</p>
-      <p>{{product.price}} Ft</p>
+
+    @if (product.discount !== 0) {
+      <p class="product-discount">{{product.discount}}%</p>
+    }
+    <div (click)="goToProduct()">
+      <img class="product-image" src="{{product.image}}">
+      <div class="product-info">
+        <p>{{product.name}}</p>
+        @if (product.discount !== 0) {
+          <p class="original-price">{{product.price | pricePipe}}</p>
+          <p>{{realPrice | pricePipe}}</p>
+        } @else {
+          <p>{{product.price | pricePipe}}</p>
+        }
+      </div>
     </div>
     <div class="product-action">
       <button mat-icon-button><mat-icon>favorite</mat-icon></button>
       <app-placeholder />
-      <button mat-flat-button>Kosárba</button>
+      <button mat-flat-button (click)="addToBasket()">Kosárba</button>
     </div>
   } @else {
     <p class="error">Ez az elem nem jeleníthető meg.</p>
