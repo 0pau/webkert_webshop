@@ -21,6 +21,14 @@ export class NavbarComponent {
 
   constructor (private router: Router) {}
 
+  goToUser() {
+    if (localStorage.getItem("isLoggedIn") == "true") {
+      this.goToPage("account");
+    } else {
+      this.goToPage("login");
+    }
+  }
+
   goToPage(path: string) {
     this.router.navigateByUrl(path)
   }

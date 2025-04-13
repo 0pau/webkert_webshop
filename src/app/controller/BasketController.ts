@@ -25,6 +25,10 @@ export class BasketController {
   }
 
   public addItem(newItem: UserBasketItem) {
+    if (localStorage.getItem("isLoggedIn") != "true") {
+      window.location.href="login"
+      return;
+    }
     this._dao!.addItem(newItem)
   }
 

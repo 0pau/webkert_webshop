@@ -1,0 +1,9 @@
+<main>
+  <header>
+    <h1>Fiók kezelése</h1>
+    <p>Ez az oldal csak tesztjelleggel működik.</p>
+  </header>
+  <p>E-mail cím: {{localStorage.getItem("username")}}</p>
+  <p>Jelszó: {{localStorage.getItem("password")}}</p>
+  <button mat-flat-button (click)="logout()">Kijelentkezés</button>
+</main>

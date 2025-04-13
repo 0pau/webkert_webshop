@@ -3,32 +3,38 @@
 
   <mat-tab-group>
     <mat-tab label="Bejelentkezés">
-      <form>
+      <form (ngSubmit)="login()">
         <mat-form-field appearance="outline">
           <mat-label>Email cím</mat-label>
-          <input matInput>
+          <input matInput [formControl]="email">
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Jelszó</mat-label>
-          <input matInput type="password">
+          <input name="password" matInput type="password" [formControl]="password">
         </mat-form-field>
+        @if (this.loginError != "") {
+          <p class="error">{{this.loginError}}</p>
+        }
         <button mat-flat-button>Bejelentkezés</button>
       </form>
     </mat-tab>
     <mat-tab label="Regisztráció">
-      <form>
+      <form (ngSubmit)="register()">
         <mat-form-field appearance="outline">
           <mat-label>Email cím</mat-label>
-          <input matInput>
+          <input matInput [formControl]="reg_email">
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Jelszó</mat-label>
-          <input matInput type="password">
+          <input matInput type="password" [formControl]="reg_password">
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Jelszó megismétlése</mat-label>
-          <input matInput type="password">
+          <input matInput type="password" [formControl]="reg_password_verify">
         </mat-form-field>
+        @if (this.regError != "") {
+          <p class="error">{{this.regError}}</p>
+        }
         <button mat-flat-button>Regisztráció</button>
       </form>
     </mat-tab>
