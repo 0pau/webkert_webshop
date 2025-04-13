@@ -37,6 +37,8 @@ export class NavbarComponent {
   }
 
   ngOnInit() {
-    this.onSizeChanged.emit(this.navMain.nativeElement.offsetHeight);
+    setTimeout(()=>{
+      this.onSizeChanged.emit(this.navMain.nativeElement.offsetHeight);
+    }, 100);
   }
 }
