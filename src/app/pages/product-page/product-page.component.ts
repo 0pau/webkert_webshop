@@ -17,6 +17,8 @@ import {SpecSheetComponent} from '../../views/spec-sheet/spec-sheet.component';
 import {Title} from '@angular/platform-browser';
 import {NotFoundComponent} from '../not-found/not-found.component';
 import {HistoryController} from '../../controller/HistoryController';
+import {NgForOf} from '@angular/common';
+import {ReviewCardComponent} from '../../views/review-card/review-card.component';
 
 @Component({
   selector: 'app-product-page',
@@ -30,7 +32,9 @@ import {HistoryController} from '../../controller/HistoryController';
     NumericUpDownComponent,
     FormsModule,
     SpecSheetComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    NgForOf,
+    ReviewCardComponent
   ],
   templateUrl: './product-page.component.html',
   styleUrl: './product-page.component.scss'
@@ -57,6 +61,8 @@ export class ProductPageComponent {
       this.productNotFound = true;
       return;
     }
+
+    this.product.loadReviews();
 
     let price = this.product.price;
     if (this.product.discount != 0) {

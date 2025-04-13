@@ -12,4 +12,15 @@ import {NgForOf} from '@angular/common';
 })
 export class SpecSheetComponent {
   @Input() specs: Map<string, SpecProperty>|undefined = undefined;
+  private entries: SpecProperty[] = [];
+
+  getSpecEntries() {
+    return this.entries;
+  }
+
+  ngOnInit() {
+    for (let k of this.specs!) {
+      this.entries.push(k[1]);
+    }
+  }
 }

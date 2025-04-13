@@ -1,8 +1,8 @@
 <div>
-  <mat-icon>star</mat-icon>
-  <mat-icon>star</mat-icon>
-  <mat-icon>star</mat-icon>
-  <mat-icon>star</mat-icon>
-  <mat-icon>star</mat-icon>
-  <p>0.0</p>
+  <mat-icon [ngClass]="value>=1?'star-fill':''">star</mat-icon>
+  <mat-icon [ngClass]="value>=2?'star-fill':''">star</mat-icon>
+  <mat-icon [ngClass]="value>=3?'star-fill':''">star</mat-icon>
+  <mat-icon [ngClass]="value>=4?'star-fill':''">star</mat-icon>
+  <mat-icon [ngClass]="value>=5?'star-fill':''">star</mat-icon>
+  <p>{{value | ratingPipe}}</p>
 </div>

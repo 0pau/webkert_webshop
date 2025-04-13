@@ -1,14 +1,14 @@
-<div id="nav-main" (window:resize)="onResize($event)">
+<div id="nav-main" #navMain (window:resize)="onResize($event)">
   <div id="navbar">
     @if (isWindowSmall()) {
-      <button mat-icon-button matTooltip="Menü">
+      <button mat-icon-button matTooltip="Menü" (click)="onSidenavOpenRequest.emit(0)">
         <mat-icon>menu</mat-icon>
       </button>
       <button class="right" mat-icon-button matTooltip="Keresés" (click)="goToPage('search')">
         <mat-icon>search</mat-icon>
       </button>
     } @else {
-      <img src="logo-light.png" id="logo">
+      <img src="logo-light.png" id="logo" (click)="goToPage('')">
       <div id="searchbox">
         <input placeholder="Írj ide a kereséshez">
         <button mat-icon-button matTooltip="Keresés indítása">
@@ -26,7 +26,7 @@
   </div>
   @if (!isWindowSmall()) {
     <div id="desktop-topbar">
-      <button mat-button>
+      <button mat-button (click)="onSidenavOpenRequest.emit(0)">
         <mat-icon>menu</mat-icon>
         <p>Összes termékkategória</p>
       </button>

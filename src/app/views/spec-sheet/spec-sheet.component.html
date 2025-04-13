@@ -1,7 +1,7 @@
 @if (specs?.size !== 0) {
   <div>
     <table>
-      <tr *ngFor="let entry of specs?.values()">
+      <tr *ngFor="let entry of getSpecEntries()">
         <td>{{entry.name}}</td>
         <td>{{entry.value + " " + entry.metric}}</td>
       </tr>

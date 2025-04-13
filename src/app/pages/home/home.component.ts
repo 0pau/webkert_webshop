@@ -18,7 +18,7 @@ export class HomeComponent {
   getNewProducts() : Product[] {
 
     let d5 = new Date();
-    d5.setDate(d5.getDate()-5);
+    d5.setDate(d5.getDate()-55);
 
     return ProductController.getInstance().find([
       new Condition("addDate", ">", d5.getTime().toString())

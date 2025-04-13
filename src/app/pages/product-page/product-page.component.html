@@ -10,9 +10,9 @@
         <h1>{{product.name}}</h1>
       </div>
       <div>
-        <app-rating-view></app-rating-view>
+        <app-rating-view [value]="product.getRating()"></app-rating-view>
       </div>
-      <p>{{product.description}}</p>
+      <p class="description">{{product.description}}</p>
       <div class="card" id="stock">
         <mat-icon>local_shipping</mat-icon>
         <p>Raktáron:</p>
@@ -39,7 +39,7 @@
     </div>
     <div>
       <h1>Vélemények</h1>
-      <p>Még senki sem véleményezte ezt a terméket.</p>
+      <app-review-card *ngFor="let i of product.getReviews()" [review]="i"></app-review-card>
     </div>
   </div>
   <!--

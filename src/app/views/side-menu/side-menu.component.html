@@ -1,0 +1,15 @@
+<img src="logo.png">
+
+<mat-tree #tree [dataSource]="dataSource" [childrenAccessor]="childrenAccessor">
+  <mat-tree-node class="no-children" *matTreeNodeDef="let node" matTreeNodePadding>
+    <section matRipple>
+      <p>{{node.title}}</p>
+    </section>
+  </mat-tree-node>
+  <mat-tree-node class="has-children" *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
+    <section matTreeNodeToggle matRipple>
+      <p>{{node.title}}</p>
+      <div matTreeNodeToggle mat-icon-button><mat-icon>{{tree.isExpanded(node) ? 'expand_more' : 'chevron_right'}}</mat-icon></div>
+    </section>
+  </mat-tree-node>
+</mat-tree>

@@ -1,1 +1,7 @@
-<app-navbar></app-navbar><router-outlet />
+<app-navbar (onSizeChanged)="this.navbarHeight = $event" (onSidenavOpenRequest)="categoriesSidenav.toggle()" #navbar></app-navbar>
+<mat-sidenav-container>
+  <mat-sidenav #categoriesSidenav fixedInViewport [fixedTopGap]="getNavbarHeight()"><app-side-menu></app-side-menu></mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet />
+  </mat-sidenav-content>
+</mat-sidenav-container>

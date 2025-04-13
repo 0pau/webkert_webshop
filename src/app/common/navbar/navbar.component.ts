@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, ElementRef, EventEmitter, Output, ViewChild} from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatIconButton, MatButton } from '@angular/material/button';
 import { MatTooltip, MatTooltipModule } from '@angular/material/tooltip'
@@ -12,6 +12,10 @@ import {BasketController} from '../../controller/BasketController';
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent {
+  @ViewChild('navMain', {static: true}) private  navMain!: ElementRef;
+
+  @Output() onSidenavOpenRequest : EventEmitter<number> = new EventEmitter;
+  @Output() onSizeChanged: EventEmitter<number> = new EventEmitter;
 
   protected smallNavbar : boolean = false;
 
@@ -25,6 +29,7 @@ export class NavbarComponent {
 
   onResize(event: any) {
     this.smallNavbar = event.target.innerWidth <= 725;
+    this.onSizeChanged.emit(this.navMain.nativeElement.offsetHeight);
   }
 
   isWindowSmall() {
@@ -32,6 +37,6 @@ export class NavbarComponent {
   }
 
   ngOnInit() {
-
+    this.onSizeChanged.emit(this.navMain.nativeElement.offsetHeight);
   }
 }

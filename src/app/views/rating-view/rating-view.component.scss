@@ -8,10 +8,16 @@ mat-icon {
   font-size: 18px;
   width: 18px;
   height: 18px;
+  opacity: 0.2;
 }
 
 p {
   font-weight: bold;
-  color: var(--brand);
+  color: var(--brand-dark);
   margin-left: 10px;
+}
+
+.star-fill {
+  color: var(--brand);
+  opacity: 1;
 }
