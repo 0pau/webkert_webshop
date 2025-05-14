@@ -1,14 +1,14 @@
 <div matRipple class="card">
   @if (product !== undefined) {
 
-    @if (product.discount !== 0) {
+    @if (!isNaN(product.discount) && product.discount !== 0) {
       <p class="product-discount">{{product.discount}}%</p>
     }
     <div (click)="goToProduct()">
       <img class="product-image" src="{{product.image}}">
       <div class="product-info">
         <p>{{product.name}}</p>
-        @if (product.discount !== 0) {
+        @if (!isNaN(product.discount) && product.discount !== 0) {
           <p class="original-price">{{product.price | pricePipe}}</p>
           <p>{{realPrice | pricePipe}}</p>
         } @else {
@@ -17,8 +17,16 @@
       </div>
     </div>
     <div class="product-action">
-      <button mat-icon-button><mat-icon>favorite</mat-icon></button>
-      <app-placeholder />
+      @if (this.authService.currentUserObj !== null) {
+        <button mat-icon-button (click)="toggleFav()">
+          @if (this.isFavorite) {
+            <mat-icon>favorite</mat-icon>
+          } @else {
+            <mat-icon>favorite_border</mat-icon>
+          }
+        </button>
+        <app-placeholder />
+      }
       <button mat-flat-button (click)="addToBasket()">Kosárba</button>
     </div>
   } @else {

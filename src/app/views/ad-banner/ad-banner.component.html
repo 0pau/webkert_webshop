@@ -1,7 +1,13 @@
 <section matRipple>
-    <div>
-        <h2>Apple hetek</h2>
-        <p>Hangolódj velünk a WWDC-re egy akciós Apple-termék megvásárlásával!</p>
+  @if (shouldShowSkeleton) {
+    <div id="skel">
+      <h2>A</h2>
+      <p>A</p>
     </div>
-    <img src="ad_placeholder.png">
+  } @else {
+    <div>
+      <h2>{{this.obj.title}}</h2>
+      <p>{{this.obj.text}}</p>
+    </div>
+  }
 </section>

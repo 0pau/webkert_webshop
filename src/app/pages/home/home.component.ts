@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { AdBannerComponent } from '../../views/ad-banner/ad-banner.component';
 import { ProductCarouselComponent } from '../../views/product-carousel/product-carousel.component';
 import {Product} from '../../model/Product';
-import {ProductController} from '../../controller/ProductController';
 import {Condition} from '../../model/Condition';
-import {HistoryController} from '../../controller/HistoryController';
 import {NgIf} from '@angular/common';
+import {Observable, of} from 'rxjs';
+import {ProductService} from '../../services/product.service';
 
 @Component({
   selector: 'app-home',
@@ -15,38 +15,19 @@ import {NgIf} from '@angular/common';
 })
 export class HomeComponent {
 
-  getNewProducts() : Product[] {
-
-    let d5 = new Date();
-    d5.setDate(d5.getDate()-55);
-
-    return ProductController.getInstance().find([
-      new Condition("addDate", ">", d5.getTime().toString())
-    ], 8);
+  constructor(protected productService : ProductService) {
   }
 
-  getDiscountedProducts() : Product[] {
-    return ProductController.getInstance().find([
-      new Condition("discount", ">", "0", "number")
-    ], 8)
+  getNewProducts() : Observable<Product[]> {
+
+    return this.productService.getProducts([], 5);
   }
 
-  getHistory() : Product[] {
-
-    let ret: Product[] = [];
-
-    let c = 0;
-    for (let i of HistoryController.getInstance().getItems()) {
-      if (c == 4) break;
-      let p = ProductController.getInstance().getProductById(i);
-      if (p === undefined) continue;
-      ret.push(p);
-      c++;
-    }
-
-    return ret;
-
+  getDiscountedProducts() : Observable<Product[]> {
+    return this.productService.getProducts(
+      [new Condition("discount", "!=", "0", "number")]
+    );
   }
 
-  protected readonly HistoryController = HistoryController;
+  protected readonly ProductService = ProductService;
 }

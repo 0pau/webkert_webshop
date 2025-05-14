@@ -1,10 +1,10 @@
 export class Condition {
   leftOperand : string = "";
-  operator : string = "";
+  operator : "<" | "<=" | "==" | "!=" | ">=" | ">" | "array-contains" | "in" | "array-contains-any" | "not-in"
   rightOperand : string = "";
   type : string = "string";
 
-  constructor(leftOperand: string, operator: string, rightOperand: string, type: string = "string") {
+  constructor(leftOperand: string, operator :  "<" | "<=" | "==" | "!=" | ">=" | ">" | "array-contains" | "in" | "array-contains-any" | "not-in", rightOperand: string, type: string = "string") {
     this.leftOperand = leftOperand;
     this.operator = operator;
     this.rightOperand = rightOperand;

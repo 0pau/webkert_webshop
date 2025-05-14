@@ -5,11 +5,14 @@ import { BasketComponent } from './pages/basket/basket.component';
 import {ProductPageComponent} from './pages/product-page/product-page.component';
 import {LoginComponent} from './pages/login/login.component';
 import {AccountComponent} from './pages/account/account.component';
+import {authGuard, publicGuard} from './guard/auth.guard';
+import {MyFavoritesComponent} from './pages/my-favorites/my-favorites.component';
 
 export const routes: Routes = [
     {path:"", component: HomeComponent},
-    {path: "basket", component: BasketComponent},
-    {path: "login", component: LoginComponent},
-    {path: "account", component: AccountComponent},
+    {path: "basket", component: BasketComponent, canActivate:[authGuard]},
+    {path: "login", component: LoginComponent, canActivate:[publicGuard]},
+    {path: "account", component: AccountComponent, canActivate:[authGuard]},
+    {path: "myFavorites", component: MyFavoritesComponent, canActivate:[authGuard]},
     {path:":id", component: ProductPageComponent},
 ];

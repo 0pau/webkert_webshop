@@ -1,0 +1,71 @@
+.two-side {
+  display: flex;
+  margin-top: 20px;
+  gap: 30px;
+}
+
+.two-side > div:first-child {
+  width: 300px;
+  flex-shrink: 0;
+}
+
+.user-card {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.user-card > div > p:first-child {
+  font-weight: 700;
+}
+
+.side-nav-btn {
+  background-color: transparent;
+  border-radius: 10px;
+  padding: 10px;
+  border: none;
+  display: flex;
+  width: 100%;
+  font-size: inherit;
+  align-items: center;
+  gap: 10px;
+}
+
+.side-nav-btn mat-icon {
+  color: var(--brand-dark)
+}
+
+header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.right {
+  margin-left: auto;
+}
+
+@media screen and (max-width: 800px) {
+  .two-side {
+    flex-direction: column;
+  }
+
+  .two-side > * {
+    width: 100%!important;
+  }
+
+  .side-nav-btn {
+    flex-direction: column;
+    font-size: small;
+    padding: 0;
+    gap: 5px;
+  }
+
+  .buttons {
+    display: flex;
+    align-items: center;
+    margin-top: 30px;
+  }
+}

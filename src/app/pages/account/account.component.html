@@ -1,9 +1,39 @@
-<main>
-  <header>
-    <h1>Fiók kezelése</h1>
-    <p>Ez az oldal csak tesztjelleggel működik.</p>
-  </header>
-  <p>E-mail cím: {{localStorage.getItem("username")}}</p>
-  <p>Jelszó: {{localStorage.getItem("password")}}</p>
-  <button mat-flat-button (click)="logout()">Kijelentkezés</button>
-</main>
+@if (this.authService.currentUserObj !== null) {
+  <main>
+    <header>
+      <h1>Fiókom</h1>
+      <button class="right" mat-button (click)="logout()">
+        <mat-icon>close</mat-icon>
+        <p>Kijelentkezés</p>
+      </button>
+    </header>
+    <div class="two-side">
+      <div>
+        <div class="card user-card">
+          <mat-icon>person</mat-icon>
+          <div>
+            <p>Veznév Keresztnév</p>
+            {{this.authService.currentUserObj?.email}}
+          </div>
+        </div>
+        <div class="buttons">
+          <button class="side-nav-btn" mat-ripple>
+            <mat-icon>edit</mat-icon>
+            <p>Adataim</p>
+          </button>
+          <button class="side-nav-btn" mat-ripple>
+            <mat-icon>local_shipping</mat-icon>
+            <p>Mentett címek</p>
+          </button>
+          <button class="side-nav-btn" mat-ripple>
+            <mat-icon>receipt</mat-icon>
+            <p>Rendeléseim</p>
+          </button>
+        </div>
+      </div>
+      <div>
+        To-do...
+      </div>
+    </div>
+  </main>
+}

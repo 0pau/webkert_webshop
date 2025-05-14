@@ -34,6 +34,10 @@ export class Product {
     ];
   }
 
+  public hasDiscount() : boolean {
+    return (!isNaN(this.discount) && this.discount > 0);
+  }
+
   getReviews() : ProductReview[] {
     return this.reviews;
   }

@@ -15,7 +15,14 @@
         @if (this.loginError != "") {
           <p class="error">{{this.loginError}}</p>
         }
-        <button mat-flat-button>Bejelentkezés</button>
+        <button mat-flat-button>
+          @if (this.isWorking) {
+            <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+          } @else {
+            Bejelentkezés
+          }
+        </button>
+
       </form>
     </mat-tab>
     <mat-tab label="Regisztráció">
@@ -35,7 +42,13 @@
         @if (this.regError != "") {
           <p class="error">{{this.regError}}</p>
         }
-        <button mat-flat-button>Regisztráció</button>
+        <button mat-flat-button>
+          @if (this.isWorking) {
+            <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+          } @else {
+            Regisztráció
+          }
+        </button>
       </form>
     </mat-tab>
   </mat-tab-group>

@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {MatTab, MatTabGroup} from '@angular/material/tabs';
 import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {MatButton} from '@angular/material/button';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatError} from '@angular/material/input';
+import {AuthService} from '../../services/auth.service';
+import {MatProgressSpinner} from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-login',
@@ -16,12 +18,16 @@ import {MatError} from '@angular/material/input';
     MatButton,
     ReactiveFormsModule,
     FormsModule,
-    MatError
+    MatError,
+    MatProgressSpinner
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
+
+  protected isWorking = false;
+  private authService = inject(AuthService);
 
   protected email = new FormControl("");
   protected password = new FormControl("");
@@ -41,13 +47,26 @@ export class LoginComponent {
       return;
     }
 
-    localStorage.setItem("isLoggedIn", "true");
-    localStorage.setItem("username", this.email.value!);
-    localStorage.setItem("password", this.password.value!);
+    this.isWorking = true;
 
-    window.location.href="/";
-
-    //alert("Jelenleg csak tesztjelleggel működik a bejelentkezés!");
+    this.authService.signIn(this.email.value!.trim(), this.password.value!.trim()).then((credential)=>{
+      this.authService.updateUserStatus(true);
+      window.location.href="/";
+    }).catch(error=>{
+      switch (error.code) {
+        case "auth/user-not-found":
+          this.loginError = "A megadott email-címmel még nem regisztráltak."
+          break;
+        case "auth/invalid-credential":
+          this.loginError = "Hibás felhasználónév vagy jelszó"
+          break;
+        default:
+          this.loginError = "Ismeretlen hiba"
+          break
+      }
+    }).finally(()=>{
+      this.isWorking = false;
+    });
   }
 
   protected register() {
@@ -69,9 +88,26 @@ export class LoginComponent {
       return;
     }
 
-    this.email.setValue(this.reg_email.value!);
-    this.password.setValue(this.reg_password.value!);
-    this.login();
+    this.isWorking=true;
+
+    this.authService.register(this.reg_email.value!.trim(), this.reg_password.value!.trim())
+      .then(()=>{
+        this.email.setValue(this.reg_email.value!);
+        this.password.setValue(this.reg_password.value!);
+        this.login();
+      })
+      .catch(error=>{
+        switch (error.code) {
+          case "auth/email-already-in-use":
+            this.regError = "Ezzel az email-címmel már regisztráltak";
+            break;
+          default:
+            this.regError = "Ismeretlen hiba"
+        }
+      })
+      .finally(()=>{
+        this.isWorking = false;
+      })
   }
 
 }

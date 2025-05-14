@@ -2,7 +2,6 @@
     <div id="ads">
         <app-ad-banner></app-ad-banner>
     </div>
-    <app-product-carousel headTitle="Új termékeink" [productList]="getNewProducts()"></app-product-carousel>
-    <app-product-carousel headTitle="Akciós ajánlatok!" [productList]="getDiscountedProducts()"></app-product-carousel>
-    <app-product-carousel *ngIf="HistoryController.getInstance().size() !== 0" headTitle="Legutóbb megtekintett termékek" [productList]="getHistory()"></app-product-carousel>
+    <app-product-carousel headTitle="Új termékeink" [productList]="this.getNewProducts()"></app-product-carousel>
+    <app-product-carousel headTitle="Akciós ajánlatok!" [productList]="this.getDiscountedProducts()"></app-product-carousel>
 </main>

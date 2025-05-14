@@ -1,22 +1,26 @@
-import { Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {MatButton} from '@angular/material/button';
+import {AuthService} from '../../services/auth.service';
+import {MatIcon} from '@angular/material/icon';
+import {MatRipple} from '@angular/material/core';
 
 @Component({
   selector: 'app-account',
   imports: [
-    MatButton
+    MatButton,
+    MatIcon,
+    MatRipple
   ],
   templateUrl: './account.component.html',
   styleUrl: './account.component.scss'
 })
 export class AccountComponent {
 
+  protected authService = inject(AuthService);
+
   logout() {
-    localStorage.removeItem("isLoggedIn");
-    localStorage.removeItem("username");
-    localStorage.removeItem("password");
+    this.authService.signOut();
     window.location.href="/";
   }
 
-  protected readonly localStorage = localStorage;
 }

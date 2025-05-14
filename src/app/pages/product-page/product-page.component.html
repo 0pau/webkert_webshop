@@ -3,14 +3,20 @@
 } @else {
 <main>
   <div id="main-info">
-    <img src="{{product.image}}">
+    @if (isWorking) {
+      <div class="spinner-container">
+        <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+      </div>
+    } @else {
+      <img src="{{product.image}}">
+    }
     <div>
       <div>
         <p>{{product.manufacturer}}</p>
         <h1>{{product.name}}</h1>
       </div>
       <div>
-        <app-rating-view [value]="product.getRating()"></app-rating-view>
+        <!--<app-rating-view [value]="product.getRating()"></app-rating-view>-->
       </div>
       <p class="description">{{product.description}}</p>
       <div class="card" id="stock">
@@ -20,13 +26,20 @@
       </div>
       <div id="main-price">
         <div class="price-layout">
-          @if (product.discount !== 0) {
+          @if (!isNaN(product.discount) && product.discount !== 0) {
             <p class="original-price">{{product.price | pricePipe}}</p>
             <p class="price">{{product.price-product.price*(product.discount/100) | pricePipe}}</p>
           } @else {
             <p class="price">{{product.price | pricePipe}}</p>
           }
         </div>
+        <button mat-icon-button (click)="this.toggleFav()">
+          @if (this.isFavorite) {
+            <mat-icon>favorite</mat-icon>
+          } @else {
+            <mat-icon>favorite_border</mat-icon>
+          }
+        </button>
         <app-numeric-up-down [min]="1" [max]="product.quantity" (onError)="showSnackbar($event)" (onValueChange)="basketItem!.quantity = $event"></app-numeric-up-down>
         <button mat-flat-button (click)="addToBasket()">Kosárba</button>
       </div>
@@ -35,11 +48,17 @@
   <div class="divided-layout">
     <div>
       <h1>Specifikációk</h1>
-      <app-spec-sheet [specs]="product.properties"></app-spec-sheet>
+      @if (!isWorking) {
+        <app-spec-sheet [specs]="product.properties"></app-spec-sheet>
+      }
     </div>
     <div>
       <h1>Vélemények</h1>
-      <app-review-card *ngFor="let i of product.getReviews()" [review]="i"></app-review-card>
+      @if (reviews.length == 0) {
+        <p>Nincsenek értékelések.</p>
+      } @else {
+        <app-review-card *ngFor="let i of reviews" [review]="i"></app-review-card>
+      }
     </div>
   </div>
   <!--

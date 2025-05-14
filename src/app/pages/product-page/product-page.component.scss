@@ -12,6 +12,15 @@
   padding-right: 50px;
 }
 
+.spinner-container {
+  height: 300px;
+  width: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-right: 50px;
+}
+
 #main-info > div {
   width: 100%;
   display: flex;
@@ -73,6 +82,11 @@
   }
 
   #main-info > img {
+    width: 100%;
+    padding: 20px;
+  }
+
+  .spinner-container {
     width: 100%;
     padding: 20px;
   }

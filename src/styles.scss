@@ -31,6 +31,14 @@
 
 }
 
+button mat-progress-spinner {
+  max-width: 24px;
+  max-height: 24px;
+  @include mat.progress-spinner-overrides((
+    active-indicator-color: white
+  ))
+}
+
 * {
     font-family: 'Nunito', sans-serif;
     margin: 0;
@@ -39,12 +47,18 @@
 
 body {
     overflow-y: scroll;
+    background-color: white;
+}
+
+mat-sidenav-container {
+  background-color: transparent!important;
 }
 
 main {
     max-width: 1000px;
     margin: 0 auto;
     padding: 30px 0;
+    background-color: white;
 }
 
 app-placeholder {
@@ -77,8 +91,32 @@ main > h1:not(:first-child) {
   margin-left: auto;
 }
 
+.product-grid {
+  margin-top: 25px;
+  display: grid;
+  grid-template-columns: repeat( auto-fill, minmax(250px, 1fr) );
+  gap: 10px;
+  flex-flow: wrap;
+}
+
+.product-grid > * {
+  min-width: 250px;
+}
+
 h1 {
   font-size: 28px;
+}
+
+.loader {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.loader mat-progress-spinner {
+  max-width: 24px;
+  max-height: 24px;
 }
 
 @media screen and (max-width: 1000px) {

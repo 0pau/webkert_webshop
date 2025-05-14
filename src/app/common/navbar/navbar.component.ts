@@ -3,7 +3,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatIconButton, MatButton } from '@angular/material/button';
 import { MatTooltip, MatTooltipModule } from '@angular/material/tooltip'
 import { Router } from '@angular/router';
-import {BasketController} from '../../controller/BasketController';
+import {BasketService} from '../../services/basket.service';
 
 @Component({
   selector: 'app-navbar',
@@ -19,7 +19,7 @@ export class NavbarComponent {
 
   protected smallNavbar : boolean = false;
 
-  constructor (private router: Router) {}
+  constructor (private router: Router, protected basketService: BasketService) {}
 
   goToUser() {
     if (localStorage.getItem("isLoggedIn") == "true") {
@@ -32,8 +32,6 @@ export class NavbarComponent {
   goToPage(path: string) {
     this.router.navigateByUrl(path)
   }
-
-  protected readonly BasketController = BasketController;
 
   onResize(event: any) {
     this.smallNavbar = event.target.innerWidth <= 725;
@@ -48,5 +46,6 @@ export class NavbarComponent {
     setTimeout(()=>{
       this.onSizeChanged.emit(this.navMain.nativeElement.offsetHeight);
     }, 100);
+    this.basketService.refreshItemCount();
   }
 }

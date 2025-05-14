@@ -18,7 +18,7 @@
     }
     <button mat-icon-button matTooltip="Kosár" (click)="goToPage('basket')">
       <mat-icon>shopping_basket</mat-icon>
-      <p class="basket_badge">{{BasketController.getInstance().getItemCount()}}</p>
+      <p class="basket_badge">{{this.basketService.itemCount}}</p>
     </button>
     <button mat-icon-button matTooltip="Fiók" (click)="goToUser()">
       <mat-icon>person</mat-icon>
@@ -30,9 +30,7 @@
         <mat-icon>menu</mat-icon>
         <p>Összes termékkategória</p>
       </button>
-      <button mat-button>Új termékeink</button>
-      <button mat-button>Népszerű termékek</button>
-      <button mat-button matTooltip="Menü megnyitása" class="right">
+      <button mat-button matTooltip="Menü megnyitása" class="right" (click)="goToPage('myFavorites')">
         <mat-icon>favorite</mat-icon>
         <p>Kedvenceim</p>
       </button>

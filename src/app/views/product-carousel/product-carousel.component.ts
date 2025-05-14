@@ -4,6 +4,7 @@ import {MatIcon} from '@angular/material/icon';
 import {ProductCardComponent} from '../product-card/product-card.component';
 import {NgForOf, NgIf} from '@angular/common';
 import {Product} from '../../model/Product';
+import {Observable, of} from 'rxjs';
 
 @Component({
   selector: 'app-product-carousel',
@@ -16,17 +17,21 @@ export class ProductCarouselComponent {
 
   private cdRef = inject(ChangeDetectorRef);
 
-  @Input() productList:Product[] = [];
+  @Input() productList:Observable<Product[]> = new Observable<Product[]>();
   @Input() headTitle:string = "";
+  products : Product[] = [];
 
   @ViewChild('scroller', {static: true}) scroller!: ElementRef;
 
   ngOnInit() {
-    this.cdRef.detectChanges();
+    this.productList.subscribe(items =>{
+      this.products = items;
+      this.cdRef.detectChanges();
+    })
   }
 
   private getMaxPages() {
-    return Math.floor(this.productList.length / this.getCols());
+    return Math.floor(this.products.length / this.getCols());
   }
 
   private getCols() {

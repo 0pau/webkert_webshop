@@ -11,6 +11,13 @@
       </div>
     </header>
     <div #scroller class="scroller">
-        <app-product-card *ngFor="let product of productList" [product]="product"></app-product-card>
+        @if (products.length !== 0) {
+          <app-product-card *ngFor="let product of products" [product]="product"></app-product-card>
+        } @else {
+          <div class="skel"></div>
+          <div class="skel"></div>
+          <div class="skel"></div>
+          <div class="skel"></div>
+        }
     </div>
 </section>

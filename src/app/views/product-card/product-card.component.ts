@@ -6,7 +6,9 @@ import { MatRippleModule } from '@angular/material/core';
 import {Product} from '../../model/Product'
 import {Router} from '@angular/router';
 import {PricePipe} from '../../pipe/PricePipe';
-import {BasketController} from '../../controller/BasketController';
+import {FavoritesService} from '../../services/favorites.service';
+import {AuthService} from '../../services/auth.service';
+import {BasketService} from '../../services/basket.service';
 
 @Component({
   selector: 'app-product-card',
@@ -16,18 +18,35 @@ import {BasketController} from '../../controller/BasketController';
 })
 export class ProductCardComponent {
 
-  constructor(private router: Router) {
+  protected isFavorite = false;
+
+  constructor(private basketService: BasketService, private router: Router, private favoritesService: FavoritesService, protected authService: AuthService) {
   }
 
   ngOnInit() {
-    if (this.product!.discount != 0) {
+    if (!isNaN(this.product!.discount) && this.product!.discount != 0) {
       this.realPrice = this.product!.price - (this.product!.price*(this.product!.discount/100));
     } else {
       this.realPrice = this.product!.price;
     }
+    this.updateFavoriteBtn();
+  }
+
+  updateFavoriteBtn() {
+    this.favoritesService.isProductMyFavorite(this.product!.id).then(r=>{
+      this.isFavorite=r;
+    })
+  }
+
+  toggleFav() {
+    this.favoritesService.toggleFavorite(this.product!.id).then(r=>{
+      this.isFavorite = (r==1);
+    });
   }
 
   @Input() product: Product | undefined;
+
+
   protected realPrice= 0;
 
   goToProduct() {
@@ -35,8 +54,9 @@ export class ProductCardComponent {
   }
 
   addToBasket() {
-    BasketController.getInstance().addItem(
-      {id: this.product!.id, price: this.realPrice, quantity: 1}
-    )
+    this.basketService.addItem({id: this.product!.id, price: this.realPrice, quantity: 1});
   }
+
+    protected readonly NaN = NaN;
+  protected readonly isNaN = isNaN;
 }
