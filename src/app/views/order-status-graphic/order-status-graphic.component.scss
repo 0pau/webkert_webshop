@@ -1,0 +1,26 @@
+.orderStatusGraphic {
+  display: flex;
+  gap: 10px;
+  margin: 15px 0;
+}
+
+.orderStatusGraphic > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  color: white;
+  background-color: #777777;
+  border-radius: 100%;
+}
+
+.orderStatusGraphic > div.active {
+  background-color: var(--brand);
+}
+
+.orderStatusGraphic mat-icon {
+  font-size: 20px;
+  max-width: 20px;
+  max-height: 20px;
+}

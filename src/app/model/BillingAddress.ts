@@ -8,7 +8,7 @@ export class BillingAddress {
     primary: boolean;
 
 
-  constructor(address: string, city: string, country: string, name: string, phone: string, postalCode: number, primary: boolean) {
+  constructor(address: string = "", city: string = "", country: string = "", name: string = "", phone: string = "", postalCode: number = 0, primary: boolean = false) {
     this.address = address;
     this.city = city;
     this.country = country;

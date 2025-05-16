@@ -1,0 +1,19 @@
+<div class="card addressCard" >
+  <div>
+    <div class="addressHead">
+      <p>
+        {{ addr!.name }} @if (addr!.primary) {<span>Elsődleges</span>}
+      </p>
+      <p>{{ addr!.phone }}</p>
+    </div>
+    <p>{{ addr!.city }}<br>{{addr!.address}}<br>{{addr!.postalCode}}, {{addr!.country}}</p>
+  </div>
+  <div class="right">
+    <button (click)="requestEdit()" mat-icon-button>
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button (click)="del()" mat-icon-button>
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+</div>

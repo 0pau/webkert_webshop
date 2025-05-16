@@ -24,7 +24,7 @@
         </div>-->
       @if (basketService.itemCount != 0) {
         <div id="price-actions">
-            <button mat-flat-button>Tovább a fizetéshez</button>
+            <button mat-flat-button (click)="this.router.navigateByUrl('/placeOrder')">Tovább a fizetéshez</button>
         </div>
       }
     </div>

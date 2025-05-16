@@ -12,27 +12,40 @@
         <div class="card user-card">
           <mat-icon>person</mat-icon>
           <div>
-            <p>Veznév Keresztnév</p>
             {{this.authService.currentUserObj?.email}}
           </div>
         </div>
         <div class="buttons">
-          <button class="side-nav-btn" mat-ripple>
-            <mat-icon>edit</mat-icon>
-            <p>Adataim</p>
-          </button>
-          <button class="side-nav-btn" mat-ripple>
+          <button [class.selected]="currentView=='addresses'" (click)="switchPane('addresses')" class="side-nav-btn" mat-ripple>
             <mat-icon>local_shipping</mat-icon>
             <p>Mentett címek</p>
           </button>
-          <button class="side-nav-btn" mat-ripple>
+          <button [class.selected]="currentView=='orders'" class="side-nav-btn" mat-ripple (click)="switchPane('orders')" >
             <mat-icon>receipt</mat-icon>
             <p>Rendeléseim</p>
           </button>
         </div>
       </div>
       <div>
-        To-do...
+        @if (isWorking) {
+          <div class="loader center">
+            <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+            <p>Egy pillanat...</p>
+          </div>
+        } @else {
+          @if (currentView == 'addresses') {
+            <h3>Szállítási címek</h3>
+              <app-billing-address-card *ngFor="let addr of this.billingAddresses" [addr]="addr" (onEditRequested)="editAddr($event)" (onDelete)="deleteItem($event)"></app-billing-address-card>
+              @if (this.billingAddresses.length === 0) {
+                <p class="center">Nincs mentett szállítási cím.</p>
+              }
+              <button id="addBtn" mat-button (click)="newItem()">Szállítási cím hozzáadása</button>
+          } @else {
+            <h3>Rendeléseim</h3>
+
+            <app-order-card *ngFor="let order of this.orderList" [order]="order" (deleteRequest)="deleteOrder($event)"></app-order-card>
+          }
+        }
       </div>
     </div>
   </main>

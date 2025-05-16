@@ -114,6 +114,10 @@ h1 {
   margin-top: 15px;
 }
 
+.loader.center {
+  justify-content: center;
+}
+
 .loader mat-progress-spinner {
   max-width: 24px;
   max-height: 24px;

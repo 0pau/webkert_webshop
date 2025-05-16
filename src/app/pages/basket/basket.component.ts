@@ -6,6 +6,7 @@ import {BasketItemComponent} from '../../views/basket-item/basket-item.component
 import {BasketService} from '../../services/basket.service';
 import {UserBasketItem} from '../../model/UserBasketItem';
 import {update} from '@angular/fire/database';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-basket',
@@ -17,7 +18,7 @@ export class BasketComponent {
 
   protected basket: UserBasketItem[] = [];
 
-  constructor(protected basketService : BasketService) {
+  constructor(protected basketService : BasketService, protected router: Router) {
   }
 
   clearAll() {

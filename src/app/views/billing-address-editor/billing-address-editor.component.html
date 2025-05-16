@@ -1,0 +1,36 @@
+<div id="dialog-main">
+  <form>
+    <h3>Szállítási cím szerkesztése</h3>
+    <p>Kapcsolattartási adatok</p>
+    <div class="flex v">
+      <mat-form-field>
+        <input matInput placeholder="Név" [(ngModel)]="oldData.name" name="name">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Telefonszám" [(ngModel)]="oldData.phone" name="phone">
+      </mat-form-field>
+    </div>
+    <p>Szállítási adatok</p>
+    <div class="flex v">
+      <mat-form-field>
+        <input matInput placeholder="Ország" [(ngModel)]="oldData.country" name="country">
+      </mat-form-field>
+      <div class="flex">
+        <mat-form-field>
+          <input matInput type="number" placeholder="Ir.szám" [(ngModel)]="oldData.postalCode" name="postalCode">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Település" [(ngModel)]="oldData.city" name="city">
+        </mat-form-field>
+      </div>
+      <mat-form-field>
+        <input matInput placeholder="Lakcím" [(ngModel)]="oldData.address" name="address">
+      </mat-form-field>
+    </div>
+    <mat-checkbox [(ngModel)]="oldData.primary" name="primary">Beállítás elsődleges címként</mat-checkbox>
+  </form>
+  <mat-dialog-actions>
+    <button mat-button (click)="cancel()">Mégse</button>
+    <button mat-button (click)="save()">Mentés</button>
+  </mat-dialog-actions>
+</div>

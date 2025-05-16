@@ -1,0 +1,14 @@
+<div class="orderStatusGraphic">
+  <div [class.active]="status>=0">
+    <mat-icon>save</mat-icon>
+  </div>
+  <div [class.active]="status>=1">
+    <mat-icon>playlist_add_check</mat-icon>
+  </div>
+  <div [class.active]="status>=2">
+    <mat-icon>local_shipping</mat-icon>
+  </div>
+  <div [class.active]="status>=3">
+    <mat-icon>check</mat-icon>
+  </div>
+</div>

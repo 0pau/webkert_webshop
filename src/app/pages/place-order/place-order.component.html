@@ -1,0 +1,56 @@
+<main>
+  <h1>Rendelés leadása</h1>
+  <p class="head">Rendelés összesítő</p>
+  <div class="card">
+    <div class="order-item" *ngFor="let itm of basket">
+      {{itm.id}}
+      <p class="right">{{itm.quantity}} × {{ itm.price | pricePipe }}</p>
+    </div>
+    <hr>
+    <div class="order-item">
+      Összesen fizetendő
+      <p class="right">{{getWholePrice() | pricePipe}}</p>
+    </div>
+  </div>
+  <p>Az oldalon jelenleg csak utánvéttel lehet fizetni, így ezt a díjat nem számoljuk fel.</p>
+  <p class="head">Szállítási információk</p>
+  <mat-form-field>
+    <mat-label>Cím választása a mentett címek közül</mat-label>
+    <mat-select [formControl]="selectFormControl" (selectionChange)="addrSelect($event)">
+      <mat-option *ngFor="let addr of availAddrs" [value]="addr">{{addr.name}} ({{addr.phone}})</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <form>
+    <p class="head">Kapcsolattartási adatok</p>
+    <div class="flex v">
+      <mat-form-field>
+        <mat-label>Név</mat-label>
+        <input matInput [(ngModel)]="selectedAddr.name" name="name">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Telefonszám</mat-label>
+        <input matInput [(ngModel)]="selectedAddr.phone" name="phone">
+      </mat-form-field>
+    </div>
+    <p class="head">Szállítási adatok</p>
+    <mat-form-field>
+      <mat-label>Ország</mat-label>
+      <input matInput [(ngModel)]="selectedAddr.country" name="country">
+    </mat-form-field>
+    <div class="flex">
+      <mat-form-field>
+        <mat-label>Ir.szám</mat-label>
+        <input type="number" matInput [(ngModel)]="selectedAddr.postalCode" name="postalCode">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Település</mat-label>
+        <input matInput [(ngModel)]="selectedAddr.city" name="city">
+      </mat-form-field>
+    </div>
+    <mat-form-field>
+      <mat-label>Lakcím</mat-label>
+      <input matInput [(ngModel)]="selectedAddr.address" name="address">
+    </mat-form-field>
+  </form>
+  <button (click)="placeOrder()" mat-flat-button id="startOrder">Rendelés leadása</button>
+</main>

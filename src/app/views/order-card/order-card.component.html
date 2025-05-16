@@ -1,0 +1,13 @@
+<div class="card orderCard">
+  <div>
+    <div class="orderCardHead">
+      <p class="orderDate">{{order!.date | dateFormatter}}</p>
+      <p class="orderPrice">{{order!.price | pricePipe }}</p>
+      <p>{{order!.items.length}} termék</p>
+    </div>
+    <app-order-status-graphic></app-order-status-graphic>
+    <p>Állapot: {{order!.status | statusPipe}}</p>
+    <p>Azonosító: {{order!.id}}</p>
+  </div>
+  <button (click)="deleteRequest.emit(order)" mat-icon-button><mat-icon>delete</mat-icon></button>
+</div>

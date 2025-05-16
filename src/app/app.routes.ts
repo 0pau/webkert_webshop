@@ -7,6 +7,7 @@ import {LoginComponent} from './pages/login/login.component';
 import {AccountComponent} from './pages/account/account.component';
 import {authGuard, publicGuard} from './guard/auth.guard';
 import {MyFavoritesComponent} from './pages/my-favorites/my-favorites.component';
+import {PlaceOrderComponent} from './pages/place-order/place-order.component';
 
 export const routes: Routes = [
     {path:"", component: HomeComponent},
@@ -14,5 +15,6 @@ export const routes: Routes = [
     {path: "login", component: LoginComponent, canActivate:[publicGuard]},
     {path: "account", component: AccountComponent, canActivate:[authGuard]},
     {path: "myFavorites", component: MyFavoritesComponent, canActivate:[authGuard]},
+    {path: "placeOrder", component: PlaceOrderComponent, canActivate:[authGuard]},
     {path:":id", component: ProductPageComponent},
 ];

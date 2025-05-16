@@ -1,0 +1,43 @@
+.addressCard {
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.addressHead {
+  margin-bottom: 10px;
+}
+
+.addressHead span {
+  font-size: small;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #00AA45;
+  margin-left: 15px;
+}
+
+.addressHead p:first-child {
+  font-weight: bold;
+}
+
+.right {
+  margin-left: auto;
+}
+
+@media screen and (max-width: 600px) {
+
+  .addressCard {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .addressCard div:first-child {
+    width: 100%;
+  }
+
+  .right {
+    margin: unset;
+  }
+}

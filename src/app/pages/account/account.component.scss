@@ -1,3 +1,7 @@
+h3 {
+  margin-bottom: 15px;
+}
+
 .two-side {
   display: flex;
   margin-top: 20px;
@@ -7,6 +11,10 @@
 .two-side > div:first-child {
   width: 300px;
   flex-shrink: 0;
+}
+
+.two-side > div:last-child {
+  width: 100%;
 }
 
 .user-card {
@@ -47,6 +55,19 @@ header {
   margin-left: auto;
 }
 
+.side-nav-btn.selected {
+  background-color: #d9d9d9;
+}
+
+#addBtn {
+  margin: 10px auto;
+  display: block;
+}
+
+.center {
+  text-align: center;
+}
+
 @media screen and (max-width: 800px) {
   .two-side {
     flex-direction: column;
@@ -59,7 +80,7 @@ header {
   .side-nav-btn {
     flex-direction: column;
     font-size: small;
-    padding: 0;
+    padding: 10px 0;
     gap: 5px;
   }
 

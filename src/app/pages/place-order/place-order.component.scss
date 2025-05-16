@@ -1,0 +1,38 @@
+.order-item {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+}
+
+.right {
+  margin-left: auto;
+}
+
+.head {
+  margin: 20px 0 5px 0;
+  opacity: 0.5;
+  font-weight: bold;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+form {
+  padding: 0 15px;
+}
+
+.flex {
+  display: flex;
+  gap: 15px;
+}
+
+.flex.v {
+  flex-direction: column;
+  gap: 0;
+}
+
+#startOrder {
+  display: block;
+  margin: 15px auto;
+}
