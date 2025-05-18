@@ -1,7 +1,7 @@
 import {Component, ElementRef, inject, ViewChild} from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './common/navbar/navbar.component';
-import { MatSidenavModule } from '@angular/material/sidenav';
+import {MatSidenav, MatSidenavModule} from '@angular/material/sidenav';
 import {SideMenuComponent} from './views/side-menu/side-menu.component';
 import {AuthService} from './services/auth.service';
 
@@ -13,6 +13,7 @@ import {AuthService} from './services/auth.service';
 })
 export class AppComponent {
   @ViewChild('navbar', {static: true}) navbar!: NavbarComponent;
+  @ViewChild('categoriesSidenav') sidenav!:MatSidenav;
   protected navbarHeight: number = 0;
   private authService = inject(AuthService);
 
@@ -20,4 +21,7 @@ export class AppComponent {
     return this.navbarHeight;
   }
 
+  closeMenu() {
+    this.sidenav.close();
+  }
 }

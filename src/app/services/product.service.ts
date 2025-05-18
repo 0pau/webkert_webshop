@@ -35,6 +35,23 @@ export class ProductService {
 
   }
 
+  findProducts(queryString: string) {
+    /*
+    return this.authService.currentUser.pipe(switchMap(async user => {
+      let list:Product[] = [];
+
+      const c = collection(this.firestore, "products");
+      let q = query(c);
+      query(q, whereGrate)
+      (await getDocs(q)).forEach(doc => {
+        list.push({...doc.data()} as Product);
+      })
+      return of(list);
+
+    }), switchMap(list => list));
+    */
+  }
+
   async getProductById(id: string): Promise<Product|null> {
 
     const result = await getDoc(doc(this.firestore, "products", id));

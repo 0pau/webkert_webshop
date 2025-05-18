@@ -9,12 +9,12 @@
       </button>
     } @else {
       <img src="logo-light.png" id="logo" (click)="goToPage('')">
-      <div id="searchbox">
-        <input placeholder="Írj ide a kereséshez">
+      <form id="searchbox" (ngSubmit)="goToSearch($event)">
+        <input [(ngModel)]="queryStr" placeholder="Írj ide a kereséshez" name="queryStr">
         <button mat-icon-button matTooltip="Keresés indítása">
           <mat-icon>search</mat-icon>
         </button>
-      </div>
+      </form>
     }
     <button mat-icon-button matTooltip="Kosár" (click)="goToPage('basket')">
       <mat-icon>shopping_basket</mat-icon>

@@ -1,0 +1,14 @@
+<main>
+  @if (queryString !== null && queryString !== "") {
+    @if (!queryString.includes("category:")) {
+      <h1>Találatok a(z) "{{this.queryString}}" kifejezésre</h1>
+    } @else {
+      <h1>Találatok</h1>
+    }
+    <div class="product-grid">
+      <app-product-card *ngFor="let p of products" [product]="p"></app-product-card>
+    </div>
+  } @else {
+    <p>Adjon meg egy keresőkifejezést.</p>
+  }
+</main>

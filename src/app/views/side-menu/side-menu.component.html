@@ -2,7 +2,7 @@
 
 <mat-tree #tree [dataSource]="dataSource" [childrenAccessor]="childrenAccessor">
   <mat-tree-node class="no-children" *matTreeNodeDef="let node" matTreeNodePadding>
-    <section matRipple>
+    <section matRipple (click)="goToItem(node)">
       <p>{{node.title}}</p>
     </section>
   </mat-tree-node>
