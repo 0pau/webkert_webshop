@@ -1,16 +1,22 @@
 import { Component } from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {ProductService} from '../../services/product.service';
 import {Product} from '../../model/Product';
 import {Condition} from '../../model/Condition';
 import {ProductCardComponent} from '../../views/product-card/product-card.component';
 import {NgForOf} from '@angular/common';
+import {MatIconButton} from '@angular/material/button';
+import {MatIcon} from '@angular/material/icon';
+import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-search',
   imports: [
     ProductCardComponent,
-    NgForOf
+    NgForOf,
+    MatIconButton,
+    MatIcon,
+    FormsModule
   ],
   templateUrl: './search.component.html',
   styleUrl: './search.component.scss'
@@ -18,9 +24,10 @@ import {NgForOf} from '@angular/common';
 export class SearchComponent {
 
   protected queryString:string|null = null;
+  protected qt="";
   protected products: Product[] = [];
 
-  constructor(private route: ActivatedRoute, private productService : ProductService) {
+  constructor(private router: Router, private route: ActivatedRoute, private productService : ProductService) {
   }
 
   ngDoCheck() {
@@ -51,5 +58,13 @@ export class SearchComponent {
       this.products = list;
       console.log(this.products);
     });
+  }
+
+  isWindowSmall() {
+    return window.innerWidth <= 725;
+  }
+
+  restartSearch() {
+    this.router.navigateByUrl("search/"+this.qt);
   }
 }

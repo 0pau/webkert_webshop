@@ -13,6 +13,11 @@ import {Observable, of} from 'rxjs';
   styleUrl: './product-carousel.component.scss'
 })
 export class ProductCarouselComponent {
+
+  constructor() {
+
+  }
+
   private page : number = 0;
 
   private cdRef = inject(ChangeDetectorRef);
@@ -26,8 +31,11 @@ export class ProductCarouselComponent {
   ngOnInit() {
     this.productList.subscribe(items =>{
       this.products = items;
-      this.cdRef.detectChanges();
     })
+  }
+
+  ngAfterContentChecked() {
+    this.cdRef.detectChanges();
   }
 
   private getMaxPages() {

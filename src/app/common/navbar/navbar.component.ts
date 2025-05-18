@@ -20,6 +20,7 @@ export class NavbarComponent {
 
   protected smallNavbar : boolean = false;
   protected queryStr = "";
+  protected currentURL = "";
 
   constructor (private router: Router, protected basketService: BasketService) {}
 
@@ -60,6 +61,7 @@ export class NavbarComponent {
         if (!ev.urlAfterRedirects.includes("search")) {
           this.queryStr = "";
         }
+        this.currentURL = ev.urlAfterRedirects;
       }
     })
   }

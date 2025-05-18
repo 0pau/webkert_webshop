@@ -4,8 +4,14 @@
       <button mat-icon-button matTooltip="Menü" (click)="onSidenavOpenRequest.emit(0)">
         <mat-icon>menu</mat-icon>
       </button>
-      <button class="right" mat-icon-button matTooltip="Keresés" (click)="goToPage('search')">
-        <mat-icon>search</mat-icon>
+      <div class="right"></div>
+      @if (!currentURL.includes("search")) {
+        <button mat-icon-button matTooltip="Keresés" (click)="goToPage('search')">
+          <mat-icon>search</mat-icon>
+        </button>
+      }
+      <button mat-icon-button matTooltip="Keresés" (click)="goToPage('myFavorites')">
+        <mat-icon>favorite_outline</mat-icon>
       </button>
     } @else {
       <img src="logo-light.png" id="logo" (click)="goToPage('')">

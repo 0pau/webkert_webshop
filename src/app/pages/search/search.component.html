@@ -1,3 +1,9 @@
+@if (isWindowSmall()) {
+  <form (ngSubmit)="restartSearch()">
+    <input placeholder="Keresés" [(ngModel)]="this.qt" name="qt">
+    <button mat-icon-button><mat-icon>search</mat-icon></button>
+  </form>
+}
 <main>
   @if (queryString !== null && queryString !== "") {
     @if (!queryString.includes("category:")) {
